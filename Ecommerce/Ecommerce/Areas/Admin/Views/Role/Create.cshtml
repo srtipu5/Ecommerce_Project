@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Create Role";
+}
+<br />
+<h1 class="text-info text-center">Create Role</h1>
+<br />
+
+<form asp-action="Create" method="post" id="role-form" enctype="multipart/form-data">
+
+    <div class="form-group row">
+        <div class="col-2"> </div>
+        <div class="col-8">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+    </div>
+ 
+    <div class="form-group row">
+        <div class="col-2">
+            <b><label class="control-label">Role Name</label></b>
+        </div>
+        <div class="col-8">
+            <input name="name" id="name" value="@ViewBag.Name" class="form-control" placeholder="Enter role name" />
+            <p style="color:red">@ViewBag.Message</p>
+        </div>
+    </div>
+
+    <div class="form-group  row">
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+            <input type="submit" value="Create" class="btn btn-outline-success" />
+            <a asp-action="Index" class="btn btn-outline-info">Back</a>
+        </div>
+    </div>
+</form>
+
+
+<br />
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $("#role-form").validate({
+                rules: {
+                    name: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Please enter role name",
+                    },
+                }
+            });
+        });
+
+    function nospaces(t) {
+        if (t.value.match(/\s/g)) {
+            t.value = t.value.replace(/\s/g, '');
+        }
+    }
+
+       function UserCheck() {
+        $("#Status").html("Checking...");
+        $.post("@Url.Action("CheckUsernameAvailability", "User")",
+            {
+                userdata: $("#UserName").val()
+            },
+        function (data) {
+            if (data == 0) {
+                $("#Status").html('<font color="Green">Available !! You can take it.</font>');
+                $("#UserName").css("border-color", "Green");
+
+            }
+            else {
+
+                $("#Status").html('<font color="Red">Alredy exist.Try another.</font>');
+                $("#UserName").css("border-color", "Red");
+            }
+        });
+    }
+    </script>
+}

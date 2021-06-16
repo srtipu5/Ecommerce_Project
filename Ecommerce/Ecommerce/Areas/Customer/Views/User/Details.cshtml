@@ -1,0 +1,53 @@
+﻿@model Ecommerce.Models.User
+
+@{
+    ViewData["Title"] = "Account Details";
+}
+<br />
+<h1 class="text-info text-center">Account Details</h1>
+<br />
+
+<form asp-action="Details" method="post" id="user-form" enctype="multipart/form-data">
+
+    <div class="form-group row">
+        <div class="col-2"> </div>
+        <div class="col-8">
+            <input type="hidden" asp-for="Id" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-2">
+            <b><label asp-for="UserName" class="control-label">User Name</label></b>
+        </div>
+        <div class="col-8">
+            <input asp-for="UserName" class="form-control" readonly="readonly" />       
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-2">
+            <b><label asp-for="AccountName" class="control-label"></label></b>
+        </div>
+        <div class="col-8">
+            <input asp-for="AccountName" class="form-control" readonly="readonly" />
+        </div>
+    </div>
+    
+
+    <div class="form-group  row">
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">Edit</a>
+            <a asp-action="Index" class="btn btn-outline-info">Back</a>
+        </div>
+    </div>
+</form>
+
+<br />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  
+}

@@ -1,0 +1,55 @@
+﻿@model Ecommerce.Models.User
+
+@{
+    ViewData["Title"] = "Account Delete";
+}
+<br />
+<h1 class="text-info text-center">Account Delete</h1>
+<br />
+
+<form asp-action="Delete" method="post" id="user-form" enctype="multipart/form-data">
+
+    <div class="form-group row">
+        <div class="col-2"> </div>
+        <div class="col-8">
+            <input type="hidden" asp-for="Id"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-2">
+            <b><label asp-for="UserName" class="control-label">User Name</label></b>
+        </div>
+        <div class="col-8">
+            <input asp-for="UserName" class="form-control" readonly="readonly" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-2">
+            <b><label class="control-label"></label></b>
+        </div>
+        <div class="col-8">
+            <input asp-for="AccountName" class="form-control" readonly="readonly" />
+        </div>
+    </div>
+
+
+    <div class="form-group  row">
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+            <h3 style="color:red;">Are you sure you want to delete your account?</h3>
+            <br />
+            <input type="submit" value="Delete" class="btn btn-outline-danger"/>
+            <a asp-action="Index" class="btn btn-outline-info">Back</a>
+        </div>
+    </div>
+</form>
+
+<br />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

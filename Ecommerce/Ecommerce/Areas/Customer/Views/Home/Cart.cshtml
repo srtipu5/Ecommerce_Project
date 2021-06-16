@@ -1,0 +1,77 @@
+﻿@using Ecommerce.Models
+@model List<Products>
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+<br />
+<h1 class="text-info" style="text-align:center;">Your Cart Products</h1>
+<br />
+<table class="table table-bordered" id="cartproductTable">
+    <thead>
+        <tr class="table-info">
+            <th>Name</th>
+
+            <th>Image</th>
+
+            <th>Color</th>
+
+            <th>Product Type</th>
+
+            <th>Price</th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.Name</td>
+
+            <td>
+                <img src="~/@item.Image" width="100" height="100" style="border-radius:5px;border:1px solid grey" />
+            </td>
+
+            <td>@item.ProductColor</td>
+
+            <td>@item.ProductTypes.ProductType</td>
+
+            <td>@item.Price</td>
+
+            <td>
+                <a asp-area="Customer" asp-action="Remove" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+        }
+        <td colspan="6"><h3 class="text-danger text-center">Total Amount : @Model.Sum(c => c.Price) Tk</h3></td>
+    </tbody>
+
+</table>
+<br />
+<div class="row">
+    <div class="col-6">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-outline-info">Back</a>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-area="Customer" asp-action="Checkout" asp-controller="Order" class="btn btn-outline-success">Check Out</a>
+    </div>
+</div>
+<br />
+
+@section scripts{
+
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#cartproductTable').DataTable({
+                "paging": false,
+                "ordering": false,
+                "info": false
+                });
+        });
+    </script>
+
+}

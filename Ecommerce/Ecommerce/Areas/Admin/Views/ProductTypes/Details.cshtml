@@ -1,0 +1,26 @@
+﻿@model Ecommerce.Models.ProductTypes
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h1 style="text-align:center;color:blue;">Product Details</h1>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductType)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success">Edit</a>
+    <a asp-action="Index" class="btn btn-outline-info">Back</a>
+</div>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

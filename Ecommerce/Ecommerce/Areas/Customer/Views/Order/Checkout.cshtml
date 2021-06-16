@@ -1,0 +1,147 @@
+﻿@model Ecommerce.Models.Order
+@using Ecommerce.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    List<Products> addProducts = HttpContextAccessor.HttpContext.Session.Get<List<Products>>("Add Products");
+    if (addProducts == null)
+    {
+        addProducts = new List<Products>();
+    }
+}
+<style>
+    th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+    }
+</style>
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1 class="text-info" style="text-align:center;">Order Details</h1>
+<br />
+
+<form asp-action="Checkout" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="col-12">
+            <div style="text-align:center">
+                <h2 class="text-black-50 text-center">Customer Information</h2>
+            </div>
+            <br />
+            <div class="form-group row">
+
+                <div class="col-4">
+                    <b><label asp-for="Name" class="control-label"></label></b>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-4">
+                    <b><label asp-for="PhoneNo" class="control-label"></label></b>
+                </div>
+                <div class="col-8">
+                    <input asp-for="PhoneNo" class="form-control" />
+                    <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-4">
+                    <b><label asp-for="Email" class="control-label"></label></b>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-4">
+                    <b><label asp-for="Address" class="control-label"></label></b>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-4">
+                    <b><label asp-for="OrderDate" class="control-label"></label></b>
+                </div>
+                <div class="col-8">
+                    <input asp-for="OrderDate" class="form-control" type="text" readonly="readonly" placeholder="Select date" />
+                    <span asp-validation-for="OrderDate" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            
+        </div>
+        <div class="col-12">
+            <div style="text-align:center">
+                <h2 class="text-black-50 text-center">Product Information</h2>
+            </div>
+            <br />
+            <table class="table table-bordered rounded">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Color</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in addProducts)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td> <img src="~/@item.Image" width="150" height="150" /></td>
+                            <td>@item.ProductColor</td>
+                            <td>@item.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <a asp-area="Customer" asp-action="Cart" asp-controller="Home" class="btn btn-outline-info">Back</a>
+            <div class="text-right">
+                <h3>Total Price : @addProducts.Sum(c => c.Price)</h3>
+                <input type="submit" value="Confirm Order" class="btn btn-outline-success" />
+            </div>
+
+        </div>
+    </div>
+</form>
+<br />
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#OrderDate").datepicker({
+                dateFormat: 'dd-MM-yy',
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'clip'
+            });
+        });
+
+    </script>
+
+}

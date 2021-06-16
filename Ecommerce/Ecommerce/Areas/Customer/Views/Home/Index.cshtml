@@ -1,0 +1,71 @@
+﻿@using Ecommerce.Models;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@model IPagedList<Products>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<br />
+<br />
+<form method="post" enctype="multipart/form-data">
+    <div class="text-right">
+        <input type="text" name="searchBy" placeholder="Search Product" class="form-group" />
+        <input type="submit" value="Search" class="btn btn-secondary" />
+    </div>
+</form>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        if (product.IsAvailabe)
+        {
+            <div class="col-4">
+                <div class="card-body mb-4">
+                    <div class="card-header">
+                        <h4 style="text-align:center;">
+                            <b><label style="font-size:20px; color: blue;">@product.Name</label></b>
+                        </h4>
+                    </div>
+                    <img src="@product.Image" alt="Card Image" class="card-img-top" style="height:200px;" />
+                    <div class="card-header">
+                        <div style="text-align:center;">
+                            <label style="font-size:20px; color: brown;"><b>Price : @product.Price</b></label>
+                        </div>
+                        <div style="text-align:center">
+                            <a asp-action="AddToCart" asp-route-id="@product.Id" class="btn btn-outline-success">Add to Cart</a>
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-info">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-4">
+                <div class="card-body mb-4">
+                    <div class="card-header">
+                        <h4 style="text-align:center;">
+                            <b><label style="font-size:20px; color: blue;">@product.Name</label></b>
+                        </h4>
+                    </div>
+                    <img src="@product.Image" alt="Card Image" class="card-img-top" style="height:200px;" />
+                    <div class="card-header">
+                        <div style="text-align:center;">
+                            <label style="font-size:20px; color: brown;"><b>Price : @product.Price</b></label>
+                        </div>
+                        <div style="text-align:center">
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-info">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@using X.PagedList.Web.Common;
+<div class="justify-content-end">
+    @Html.PagedListPager(Model, generatePageUrl: c => Href(contentPath: "~/Customer/Home/Index?page=" + c), PagedListRenderOptionsBase.PageNumbersOnly)
+</div>

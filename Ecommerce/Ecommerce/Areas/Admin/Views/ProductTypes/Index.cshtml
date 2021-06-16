@@ -1,0 +1,82 @@
+﻿@using Ecommerce.Models;
+
+@model IEnumerable<ProductTypes>
+
+@{
+    ViewData["Title"] = "Product Type";
+}
+<style>
+    th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+    }
+</style>
+
+<h1 class="text-info text-center">Product Type List</h1>
+
+<p class="float-right">
+    <a asp-action="Create" class="btn btn-outline-info"><i class="fas fa-plus-square"></i> Add New Product Type</a>
+</p>
+<table class="table table-bordered rounded">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductType)
+            </th>
+
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductType)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success"><i class="fas fa-info-circle"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    @if (TempData["save"] != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                alertify.success('@TempData["save"]');
+            });
+        </script>
+    }
+    @if (TempData["update"] != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                alertify.success('@TempData["update"]');
+            });
+        </script>
+    }
+    @if (TempData["delete"] != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                alertify.error('@TempData["delete"]');
+            });
+        </script>
+    }
+
+}

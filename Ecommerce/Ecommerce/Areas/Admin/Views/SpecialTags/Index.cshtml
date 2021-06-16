@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Ecommerce.Models.SpecialTags>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+    }
+</style>
+
+<h1 class="text-info text-center">Tag List</h1>
+
+<p class="float-right">
+    <a asp-action="Create" class="btn btn-outline-info"><i class="fas fa-plus-square"></i> Add New Tag</a>
+</p>
+<table class="table table-bordered rounded">
+    <thead>
+        <tr class="table-info">
+            <th>
+                @Html.DisplayNameFor(model => model.SpecialTag)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpecialTag)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success"><i class="fas fa-info-circle"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

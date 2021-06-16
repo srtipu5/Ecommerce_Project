@@ -1,0 +1,94 @@
+﻿@model Ecommerce.Models.Products
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h1 class="text-info" style="text-align:center;">Product Details</h1>
+<br />
+<form asp-action="Details" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded border row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-2"></div>
+                <div class="col-3">
+                    <b><label asp-for="Name" class="control-label"></label></b>
+                </div>
+                <div class="col-6">
+                    <input asp-for="Name" class="form-control" readonly="readonly" />
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2"></div>
+                <div class="col-3">
+                    <b><label asp-for="Price" class="control-label"></label></b>
+                </div>
+                <div class="col-6">
+                    <input asp-for="Price" class="form-control" readonly="readonly" />
+                </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-2"></div>
+                <div class="col-3">
+                    <b><label asp-for="ProductColor" class="control-label"></label></b>
+                </div>
+                <div class="col-6">
+                    <input asp-for="ProductColor" class="form-control" readonly="readonly" />
+                </div>
+                <span asp-validation-for="ProductColor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-2"></div>
+                <div class="col-3">
+                    <b><label asp-for="ProductTypeId" class="control-label"></label></b>
+                </div>
+                <div class="col-6">
+                    <input asp-for="ProductTypeId" class="form-control" readonly="readonly" />
+                </div>
+                <span asp-validation-for="ProductTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-6"></div>
+                <div class="col-5">
+                    @if (Model.IsAvailabe)
+                    {
+
+                        <img src="~/Images/stockinnow.jpg" width="200px" height="120px" />
+
+                    }
+                    else
+                    {
+                        <img src="~/Images/soldout.jpg" width="200px" height="120px" />
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="text-center">
+                <a asp-action="Index" class="btn btn-outline-info">Back</a>
+
+                @if (Model.IsAvailabe)
+                {
+
+                    <input type="submit" value="Add to Cart" class="btn btn-outline-success" />
+
+                }
+
+            </div>
+        </div>
+
+        <div class="col-3">
+            <img src="~/@Model.Image" width="250px" height="250px" style="border-radius:5px;border:1px solid grey" />
+        </div>
+
+    </div>
+</form>
+<br />
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
